@@ -6,29 +6,43 @@ const Voxa = require('voxa')
   , variables = require('./variables')
 ;
 
-const skill = new Voxa({
+const VoxaApp = new Voxa({
   Model,
   variables,
   views: responses
 });
 
-require('./plugins/tracker')(skill);
-//require('./plugins/voicelabs')(skill,config.voiceinsights);
-require('voxa-opearlo')(skill,config.opearlo);
-require('voxa-ga')(skill,config.google_analytics);
-require('./events')(skill);
-require('./states')(skill);
+
+require('./plugins/tracker')(VoxaApp);
+//require('./plugins/voicelabs')(VoxaApp,config.voiceinsights);
+//require('voxa-opearlo')(VoxaApp,config.opearlo);
+//require('voxa-ga')(VoxaApp,config.google_analytics);
+require('./events')(VoxaApp);
+require('./states')(VoxaApp);
 
 // Create the handler that responds to the Alexa Request.
-exports.handler = function (event, context, done) {
+exports.skill = function (event, context, done) {
   if(config.alexa.verbose) {
     //console.log('Request Received');
     console.log(JSON.stringify(event,null,2));
     context = loggedContext(context, done);
   }
-  skill.execute(event, context)
-  .then(res => done(null,res))
-  .catch(done)
+  const AlexaSkill = new Voxa.Alexa(VoxaApp)
+  AlexaSkill.execute(event, context)
+    .then(res => done(null,res))
+    .catch(done)
+};
+
+exports.action = function (event, context, done) {
+  if(config.alexa.verbose) {
+    //console.log('Request Received');
+    console.log(JSON.stringify(event,null,2));
+    context = loggedContext(context, done);
+  }
+  const ApiAiAgent = new Voxa.ApiAi(VoxaApp)
+  ApiAiAgent.execute(event, context)
+    .then(res => done(null,res))
+    .catch(done)
 };
 
 function loggedContext(context, done) {

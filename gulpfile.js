@@ -49,6 +49,6 @@ gulp.task('zip',['clean'], function(cb){
    fs.readFile(path.join(__dirname,'interaction-model','utterances-src.txt'),function(err,file){
      if(err) return cb(err);
      var expanded = UtteranceExpaander(file);
-     fs.writeFile(path.join(__dirname,'interaction-model','utterances.txt'),expanded,cb);
+     fs.writeFile(path.join(__dirname,'interaction-model','SampleUtterances.txt'),expanded,cb);
    });
  });

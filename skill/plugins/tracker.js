@@ -40,7 +40,7 @@ module.exports = function(skill){
   })
 
   skill.onSessionEnded(function(event,reply){
-    info('End session for',event.user.userId);
+    info('End session for', event.user);
   })
 
   skill.onRequestStarted(function(event,reply) {

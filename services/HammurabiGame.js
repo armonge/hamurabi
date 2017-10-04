@@ -81,7 +81,7 @@ class HammurabiGame {
   }
 
   static fromEvent(event) {
-    return this.fromData(_.get(event,'session.attributes.modelData'))
+    return this.fromData(_.get(event,'session.attributes.model'))
   }
 
   static fromData(data) {

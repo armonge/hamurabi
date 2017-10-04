@@ -121,80 +121,80 @@ exports.commandStatus = function(game) {
 
 exports.kingdomStatus = function(game) {
   if(game.year == 1) {
-    return "HAMURABI: I BEG TO REPORT TO YOU,\n" +
-  "IN YEAR " + game.year +" YOUR POPULATION IS " + game.population + ".\n" +
-  "THE CITY OWNS " + acres(game.acres) + ".\n" +
-  ( game.year != 1 ?"YOU HARVESTED " + bushels(game.yield) +" PER ACRE.\n":'') +
-  "YOU HAVE " + bushels(game.bushels) +" IN STORE.\n" +
-  "LAND IS TRADING AT " + bushels(game.acresCost) + " PER ACRE."
+    return "hamurabi: i beg to report to you,\n" +
+  "in year " + game.year +" your population is " + game.population + ".\n" +
+  "the city owns " + acres(game.acres) + ".\n" +
+  ( game.year != 1 ?"you harvested " + bushels(game.yield) +" per acre.\n":'') +
+  "you have " + bushels(game.bushels) +" in store.\n" +
+  "land is trading at " + bushels(game.acresCost) + " per acre."
   }
 
-  return "HAMURABI: I BEG TO REPORT TO YOU,\n" +
-"IN YEAR " + game.year +" " + people(game.peopleDied) + " STARVED AND " + people(game.immigrants) +" CAME TO THE CITY.\n" +
-( game.hadPlague  ? "A HORRIBLE PLAGUE STRUCK! HALF THE PEOPLE DIED.\n" :'') +
-"POPULATION IS NOW " + game.population + ".\n" +
-"THE CITY NOW OWNS " + acres(game.acres) + ".\n" +
-( game.year != 1 ?"YOU HARVESTED " + bushels(game.yield) +" PER ACRE.\n":'') +
-( game.eaten ?"RATS ATE " + bushels(game.eaten) +".\n":'') +
-"YOU NOW HAVE " + bushels(game.bushels) +" IN STORE.\n" +
-"LAND IS TRADING AT " + bushels(game.acresCost) + " PER ACRE."
+  return "hamurabi: i beg to report to you,\n" +
+"in year " + game.year +" " + people(game.peopleDied) + " starved and " + people(game.immigrants) +" came to the city.\n" +
+( game.hadPlague  ? "a horrible plague struck! half the people died.\n" :'') +
+"population is now " + game.population + ".\n" +
+"the city now owns " + acres(game.acres) + ".\n" +
+( game.year != 1 ?"you harvested " + bushels(game.yield) +" per acre.\n":'') +
+( game.eaten ?"rats ate " + bushels(game.eaten) +".\n":'') +
+"you now have " + bushels(game.bushels) +" in store.\n" +
+"land is trading at " + bushels(game.acresCost) + " per acre."
           ;
 }
 
 exports.finalKingdomStatus = function(game) {
-  var despedida ="SO LONG FOR NOW."
+  var despedida ="so long for now."
     , loseMsg =
-      "DUE TO THIS EXTREME MISMANAGEMENT YOU HAVE NOT ONLY\n" +
-      "BEEN IMPEACHED AND THROWN OUT OF OFFICE BUT YOU HAVE\n" +
-      "ALSO BEEN DECLARED NATIONAL FINK!!\n" + despedida
+      "due to this extreme mismanagement you have not only\n" +
+      "been impeached and thrown out of office but you have\n" +
+      "also been declared national fink!!\n" + despedida
   , acresPerPerson = game.acresPerPerson
 ;
 
   if(game.hasRevolt) {
-    return "YOU STARVED " + people(game.peopleDied) + " IN ONE YEAR!!!\n" + loseMsg;
+    return "you starved " + people(game.peopleDied) + " in one year!!!\n" + loseMsg;
   }
   var msg =
-"IN YOUR 10-YEAR TERM OF OFFICE, " + game.percentPopDied.toFixed(0) + " PERCENT OF THE\n" +
-"POPULATION STARVED PER YEAR ON AVERAGE, I.E., A TOTAL OF " + people(game.peopleDied) + " DIED!!\n"+
-"YOU STARTED WITH 10 ACRES PER PERSON AND ENDED WITH " + acresPerPerson + " ACRES PER PERSON.\n";
+"in your 10-year term of office, " + game.percentPopDied.toFixed(0) + " percent of the\n" +
+"population starved per year on average, i.e., a total of " + people(game.peopleDied) + " died!!\n"+
+"you started with 10 acres per person and ended with " + acresPerPerson + " acres per person.\n";
 
   if (game.percentPopDied > 33 || acresPerPerson < 7) return msg + loseMsg;
   if (game.percentPopDied > 10 || acresPerPerson < 9)
   {
-    return msg + "YOUR HEAVY-HANDED PERFORMANCE SMACKS OF NERO AND IVAN IV.\n" +
-      "THE PEOPLE (REMAINING) FIND YOU AN UNPLEASANT RULER, AND,\n"+
-      "FRANKLY, HATE YOUR GUTS!\n" + despedida;
+    return msg + "your heavy-handed performance smacks of nero and ivan iv.\n" +
+      "the people (remaining) find you an unpleasant ruler, and,\n"+
+      "frankly, hate your guts!\n" + despedida;
       ;
   }
   else if (game.percentPopDied > 3 || acresPerPerson < 10)
   {
-    return msg + "YOUR PERFORMANCE COULD HAVE BEEN SOMEWHAT BETTER, BUT REALLY WASN'T TOO BAD AT ALL.\n" +
-      Math.floor(game.population * .8 * Math.random() )+ " PEOPLE WOULD " +
-      "DEARLY LIKE TO SEE YOU ASSASSINATED BUT WE ALL HAVE OUR " +
-      "TRIVIAL PROBLEMS.\n" + despedida;
+    return msg + "your performance could have been somewhat better, but really wasn't too bad at all.\n" +
+      Math.floor(game.population * .8 * Math.random() )+ " people would " +
+      "dearly like to see you assassinated but we all have our " +
+      "trivial problems.\n" + despedida;
   }
   else
   {
-    return msg +"A FANTASTIC PERFORMANCE!!! CHARLEMANGE, DISRAELI, AND\n" +
-      "JEFFERSON COMBINED COULD NOT HAVE DONE BETTER!\n" + despedida;
+    return msg +"a fantastic performance!!! charlemange, disraeli, and\n" +
+      "jefferson combined could not have done better!\n" + despedida;
   }
 }
 
 function people(cnt) {
-  return !cnt ? 'NOBODY'
-       : cnt == 1 ? '1 PERSON'
-       : '' + cnt +' PEOPLE'
+  return !cnt ? 'nobody'
+       : cnt == 1 ? '1 person'
+       : '' + cnt +' people'
 }
 
 function acres(cnt) {
-  return !cnt ? 'NO ACRES'
-       : cnt == 1 ? '1 ACRE'
-       : cnt <= 1 ? '1 ACRE'
-       : '' + cnt +' ACRES'
+  return !cnt ? 'no acres'
+       : cnt == 1 ? '1 acre'
+       : cnt <= 1 ? '1 acre'
+       : '' + cnt +' acres'
 }
 
 function bushels(cnt) {
-  return !cnt ? 'NO BUSHELS'
-       : cnt == 1 ? '1 BUSHEL'
-       : '' + cnt +' BUSHELS'
+  return !cnt ? 'no bushels'
+       : cnt == 1 ? '1 bushel'
+       : '' + cnt +' bushels'
 }

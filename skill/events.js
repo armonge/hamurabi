@@ -6,18 +6,20 @@ var Reply = require('voxa').Reply
 module.exports = function(skill) {
 
   skill.onBeforeReplySent(function(request, reply) {
-    var reprompt = reply.msg.reprompt;
-    if (reprompt) {
-      request.session.attributes.reprompt = reprompt;
+    var reprompts = reply.msg.reprompts;
+    if (reprompts.length) {
+      request.model._reprompts = reprompts;
       return;
     }
-    request.session.attributes.reprompt = null;
-  })
+  });
 
 
   skill.onUnhandledState(function(request) {
-    var reprompt = request.session.attributes.reprompt;
-    if (reprompt) { return { ask: reprompt }; }
+    var reprompts = request.model._reprompts;
+    if (reprompts) {
+      return { message:  { ask: reprompts.join('\n') }, to: request.model._state };
+    }
+
     return {reply: 'Errors.BadLaunch'};
   })
 
